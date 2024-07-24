@@ -1,0 +1,19 @@
+<!-- src/app/login/login.component.html -->
+<form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur ou numéro de téléphone</label>
+      <div class="input-container">
+        <span class="material-icons">account_circle</span>
+        <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Code PIN</label>
+      <div class="input-container">
+        <span class="material-icons">lock</span>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
+    </div>
+    <button type="submit">Connexion</button>
+  </form>
+  
