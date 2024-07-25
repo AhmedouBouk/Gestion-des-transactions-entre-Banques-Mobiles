@@ -1,7 +1,7 @@
-// src/app/transaction-form/transaction-form.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TransactionService } from '../transaction.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -21,6 +21,8 @@ export class TransactionFormComponent {
     fees: 0
   };
 
+  constructor(private transactionService: TransactionService) {}
+
   calculateFees(): void {
     if (this.transaction.amount < 1000) {
       this.transaction.fees = 10;
@@ -36,6 +38,15 @@ export class TransactionFormComponent {
   }
 
   onSubmit(): void {
-    console.log('Transaction soumise', this.transaction);
+    this.transactionService.createTransaction(this.transaction).subscribe({
+      next: response => {
+        console.log('Transaction créée avec succès', response);
+        alert('Transaction créée avec succès');
+      },
+      error: error => {
+        console.error('Échec de la création de la transaction', error);
+        alert('Échec de la création de la transaction : ' + error.message);
+      }
+    });
   }
 }
