@@ -73,9 +73,9 @@ form.sign-in-form {
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
-  display: grid;
-  grid-template-columns: 15% 85%;
-  padding: 0 0.4rem;
+  display: flex; /* Changed from grid to flex */
+  align-items: center; /* Center align items vertically */
+  padding: 0 1rem; /* Adjust padding to ensure input fills container */
   position: relative;
 }
 
@@ -85,16 +85,19 @@ form.sign-in-form {
   color: #acacac;
   transition: 0.5s;
   font-size: 1.1rem;
+  margin-right: 0.5rem; /* Adjust margin to position icon correctly */
 }
 
 .input-field input {
-  background: none;
+  background: none; /* Remove background color */
   outline: none;
   border: none;
   line-height: 1;
   font-weight: 600;
   font-size: 1.1rem;
   color: #333;
+  flex-grow: 1; /* Ensure input takes available space */
+  border-radius: 55px; /* Match container's border-radius */
 }
 
 .input-field input::placeholder {
