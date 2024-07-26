@@ -1,0 +1,60 @@
+<div class="container" [class.sign-up-mode]="isSignUpMode">
+    <div class="forms-container">
+      <div class="signin-signup">
+        <form class="sign-in-form" *ngIf="!isSignUpMode" (ngSubmit)="onLogin()">
+          <h2 class="title">Sign in</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+          </div>
+          <input type="submit" value="Login" class="btn solid" />
+        </form>
+  
+        <form class="sign-up-form" *ngIf="isSignUpMode" (ngSubmit)="onSignup()">
+          <h2 class="title">Sign up</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+          </div>
+          <input type="submit" class="btn" value="Sign up" />
+        </form>
+      </div>
+    </div>
+  
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>New here?</h3>
+          <p>Welcome to our platform. Click the button below to create a new account.</p>
+          <button class="btn transparent" (click)="toggleSignUpMode()">
+            Sign up
+          </button>
+        </div>
+        <img src="assets/img/log.svg" class="image" alt="" />
+      </div>
+  
+      <div class="panel right-panel">
+        <div class="content">
+          <h3>One of us?</h3>
+          <p>If you already have an account, click the button below to log in.</p>
+          <button class="btn transparent" (click)="toggleSignUpMode()">
+            Sign in
+          </button>
+        </div>
+        <img src="assets/img/register.svg" class="image" alt="" />
+      </div>
+    </div>
+  </div>
+  

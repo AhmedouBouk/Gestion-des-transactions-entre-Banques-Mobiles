@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
 import { TransactionFormComponent } from './transaction-form/transaction-form.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'auth', component: AuthComponent },
   { path: 'transaction', component: TransactionFormComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/auth', pathMatch: 'full' }
 ];
