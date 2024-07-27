@@ -1,7 +1,16 @@
+<div class="toggle-container">
+  <div class="toggle-switch" (click)="toggleView()" tabindex="0" (keypress)="handleKeyPress($event)" (keydown)="handleKeyDown($event)" (keyup)="handleKeyUp($event)">
+    <div class="toggle-indicator" [class.active]="showTransactionForm"></div>
+    <div class="toggle-text left">
+      transaction history
+    </div>
+    <div class="toggle-text right">
+      Transaction form
+    </div>
+  </div>
+</div>
+
 <div class="transaction-form">
-  <button (click)="toggleView()">
-    {{ showTransactionForm ? 'View Transaction History' : 'Initiate a Transaction' }}
-  </button>
   <div *ngIf="showTransactionForm">
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">

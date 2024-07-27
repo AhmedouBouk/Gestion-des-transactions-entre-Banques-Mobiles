@@ -1,3 +1,62 @@
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 500px; /* Increased width */
+  height: 70px; /* Increased height */
+  background-color: #f0f0f0;
+  border-radius: 35px; /* Match height */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color 0.3s;
+
+  .toggle-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* 50% of the toggle switch width */
+    height: 100%; /* 100% of the toggle switch height */
+    background-color: #5995fd;
+    transition: left 0.3s;
+
+    &.active {
+      left: 50%; /* Move to the right half */
+    }
+  }
+
+  .toggle-text {
+    width: 50%;
+    text-align: center;
+    line-height: 70px; /* Match the height of the toggle switch */
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 1;
+    color: #333;
+
+    &.left {
+      color: #fff;
+    }
+
+    &.right {
+      color: #333;
+    }
+
+    .toggle-switch.active &.left {
+      color: #333;
+    }
+
+    .toggle-switch.active &.right {
+      color: #fff;
+    }
+  }
+}
+
 .transaction-form {
   max-width: 600px; /* Adjusted to make the form larger */
   margin: 50px auto; /* Center the form */
@@ -41,6 +100,9 @@
         flex-grow: 1;
         padding: 5px 10px;
         border-radius: 25px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
       }
 
       input.no-spin::-webkit-outer-spin-button,
@@ -49,7 +111,10 @@
         margin: 0;
       }
 
-      
+      input.no-spin {
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
     }
   }
 
