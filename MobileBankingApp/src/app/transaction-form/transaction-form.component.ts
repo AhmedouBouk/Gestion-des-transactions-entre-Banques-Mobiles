@@ -1,52 +1,61 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../shared/transaction.service';
+import { TransactionHistoryComponent } from '../transaction-history/transaction-history.component';
 
 @Component({
   selector: 'app-transaction-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TransactionHistoryComponent],
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss']
 })
 export class TransactionFormComponent {
-  transaction = {
-    senderPhone: '',
-    recipientPhone: '',
-    senderBank: '',
-    recipientBank: '',
-    amount: 0,
-    note: '',
-    fees: 0
-  };
+  showTransactionForm: boolean = true;
+  transaction: any = {};
 
   constructor(private transactionService: TransactionService) {}
 
-  calculateFees(): void {
-    if (this.transaction.amount < 1000) {
+  toggleView() {
+    this.showTransactionForm = !this.showTransactionForm;
+  }
+
+  onSubmit() {
+    this.transactionService.createTransaction(this.transaction).subscribe(response => {
+      console.log('Transaction submitted successfully');
+      // Reset form after submission
+      this.transaction = {};
+    });
+  }
+
+  onAmountChange() {
+    // Update transaction fees based on the amount
+    const amount = this.transaction.amount;
+    if (amount < 1000) {
       this.transaction.fees = 10;
-    } else if (this.transaction.amount < 10000) {
+    } else if (amount < 10000) {
       this.transaction.fees = 100;
     } else {
-      this.transaction.fees = 200; // Exemple pour des montants plus élevés, continuez le schéma
+      this.transaction.fees = 1000;
     }
   }
 
-  onAmountChange(): void {
-    this.calculateFees();
+  handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.toggleView();
+    }
   }
 
-  onSubmit(): void {
-    this.transactionService.createTransaction(this.transaction).subscribe({
-      next: response => {
-        console.log('Transaction créée avec succès', response);
-        alert('Transaction créée avec succès');
-      },
-      error: error => {
-        console.error('Échec de la création de la transaction', error);
-        alert('Échec de la création de la transaction : ' + error.message);
-      }
-    });
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+    }
+  }
+
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+    }
   }
 }

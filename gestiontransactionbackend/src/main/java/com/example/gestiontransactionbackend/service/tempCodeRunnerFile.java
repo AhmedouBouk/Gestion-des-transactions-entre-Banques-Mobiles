@@ -1,0 +1,1 @@
+jwtTokenProvider.generateToken(authentication);

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../shared/auth.service';
+import { CommonModule } from '@angular/common';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -13,22 +16,52 @@ import { FormsModule } from '@angular/forms';
 export class AuthComponent {
   isSignUpMode: boolean = false;
   username: string = '';
-  email: string = '';
   password: string = '';
+  confirmPassword: string = '';
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  toggleSignUpMode(): void {
+  toggleSignUpMode() {
     this.isSignUpMode = !this.isSignUpMode;
+    this.resetForm();
   }
 
-  onLogin(): void {
-    // For now, just navigate to the transaction form page
-    this.router.navigate(['/transaction']);
+  onSignin() {
+    this.authService.signIn(this.username, this.password).pipe(
+      tap(response => {
+        console.log('Signin successful', response);
+        this.router.navigate(['/dashboard']);
+      }),
+      catchError(error => {
+        console.error('Signin failed', error);
+        this.errorMessage = 'Invalid username or password';
+        return of(null); // Return an observable to complete the stream
+      })
+    ).subscribe();
   }
 
-  onSignup(): void {
-    // For now, just navigate to the transaction form page
-    this.router.navigate(['/transaction']);
+  onSignup() {
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Passwords do not match';
+      return;
+    }
+    this.authService.signUp(this.username, this.password).subscribe(
+      response => {
+        console.log('Signup successful', response);
+        this.router.navigate(['/transaction']);
+      },
+      error => {
+        console.error('Signup failed', error);
+        this.errorMessage = 'Signup failed. Please try again.';
+      }
+    );
+  }
+
+  private resetForm() {
+    this.username = '';
+    this.password = '';
+    this.confirmPassword = '';
+    this.errorMessage = '';
   }
 }

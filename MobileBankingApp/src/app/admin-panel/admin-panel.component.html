@@ -1,0 +1,13 @@
+<div class="admin-panel">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li *ngFor="let transaction of transactions">
+        <p>{{ transaction.details }}</p>
+        <button (click)="updateStatus(transaction.id, 'Completed')">Complete</button>
+        <button (click)="updateStatus(transaction.id, 'Cancelled')">Cancel</button>
+        <button (click)="updateStatus(transaction.id, 'Invalid')">Invalidate</button>
+        <button (click)="updateStatus(transaction.id, 'Valid')">Validate</button>
+      </li>
+    </ul>
+  </div>
+  

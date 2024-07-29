@@ -1,21 +1,35 @@
-// src/main/java/com/example/gestiontransactionbackend/model/User.java
 package com.example.gestiontransactionbackend.model;
 
+
+
 import jakarta.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "users")  // Assurez-vous que le nom de la table ne soit pas un mot réservé
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    // Getters and setters
+
+    public User() {
+    }
+
+    public User(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -23,7 +37,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -31,10 +45,51 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public User id(Long id) {
+        setId(id);
+        return this;
+    }
+
+    public User username(String username) {
+        setUsername(username);
+        return this;
+    }
+
+    public User password(String password) {
+        setPassword(password);
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password);
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
+    }
+    
 }

@@ -1,25 +1,75 @@
-$primary-color: #007bff;
-$primary-color-hover: #0056b3;
-$input-border-color: #ced4da;
-$input-focus-border-color: $primary-color;
-$box-shadow-color: rgba(0, 0, 0, 0.1);
-
-:host {
+.toggle-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f9fa;
+  margin: 20px 0;
 }
 
-form {
-  width: 100%;
-  max-width: 600px;
-  padding: 15px;
-  margin: auto;
+.toggle-switch {
+  position: relative;
+  width: 500px; /* Increased width */
+  height: 70px; /* Increased height */
+  background-color: #f0f0f0;
+  border-radius: 35px; /* Match height */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: background-color 0.3s;
+
+  .toggle-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* 50% of the toggle switch width */
+    height: 100%; /* 100% of the toggle switch height */
+    background-color: #5995fd;
+    transition: left 0.3s;
+
+    &.active {
+      left: 50%; /* Move to the right half */
+    }
+  }
+
+  .toggle-text {
+    width: 50%;
+    text-align: center;
+    line-height: 70px; /* Match the height of the toggle switch */
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 1;
+    color: #333;
+
+    &.left {
+      color: #fff;
+    }
+
+    &.right {
+      color: #333;
+    }
+
+    .toggle-switch.active &.left {
+      color: #333;
+    }
+
+    .toggle-switch.active &.right {
+      color: #fff;
+    }
+  }
+}
+
+.transaction-form {
+  max-width: 600px; /* Adjusted to make the form larger */
+  margin: 50px auto; /* Center the form */
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 0 10px $box-shadow-color;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
 
   .form-group {
     margin-bottom: 15px;
@@ -27,66 +77,68 @@ form {
     label {
       display: block;
       margin-bottom: 5px;
-      font-weight: bold;
-      color: #495057;
+      color: #333;
     }
 
     .input-container {
       display: flex;
       align-items: center;
-      border: 1px solid $input-border-color;
-      border-radius: 5px;
-      padding: 10px;
-      transition: border-color 0.3s;
+      background-color: #fff;
+      border-radius: 25px;
+      padding: 10px 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-      &:focus-within {
-        border-color: $input-focus-border-color;
-      }
-
-      .material-icons, .currency-symbol {
+      .material-icons,
+      .currency-symbol {
         margin-right: 10px;
-        color: #6c757d;
+        color: #666;
       }
 
       input {
-        flex: 1;
         border: none;
         outline: none;
-        padding: 8px;
-        box-sizing: border-box;
+        flex-grow: 1;
+        padding: 5px 10px;
+        border-radius: 25px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
 
-        &.no-spin {
-          /* Remove the spin buttons for Chrome, Safari, Edge, Opera */
-          &::-webkit-outer-spin-button,
-          &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
+      input.no-spin::-webkit-outer-spin-button,
+      input.no-spin::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-          
-        }
+      input.no-spin {
+        -moz-appearance: textfield;
+        appearance: textfield;
       }
     }
   }
 
   p {
-    font-weight: bold;
-    color: $primary-color;
+    margin: 10px 0;
+    color: #666;
   }
 
   button {
     width: 100%;
-    padding: 10px;
+    background-color: #5995fd;
     border: none;
-    border-radius: 5px;
-    background-color: $primary-color;
-    color: white;
-    font-size: 16px;
+    outline: none;
+    padding: 15px;
+    border-radius: 25px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
     cursor: pointer;
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: $primary-color-hover;
+      background-color: #4d84e2;
     }
   }
 }

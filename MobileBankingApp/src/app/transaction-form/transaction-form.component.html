@@ -1,48 +1,67 @@
-<form (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="senderPhone">Numéro de téléphone de l'expéditeur</label>
-    <div class="input-container">
-      <span class="material-icons">phone</span>
-      <input type="text" id="senderPhone" [(ngModel)]="transaction.senderPhone" name="senderPhone" required>
+<div class="toggle-container">
+  <div class="toggle-switch" (click)="toggleView()" tabindex="0" (keypress)="handleKeyPress($event)" (keydown)="handleKeyDown($event)" (keyup)="handleKeyUp($event)">
+    <div class="toggle-indicator" [class.active]="showTransactionForm"></div>
+    <div class="toggle-text left">
+      transaction history
+    </div>
+    <div class="toggle-text right">
+      Transaction form
     </div>
   </div>
-  <div class="form-group">
-    <label for="recipientPhone">Numéro de téléphone du destinataire</label>
-    <div class="input-container">
-      <span class="material-icons">phone</span>
-      <input type="text" id="recipientPhone" [(ngModel)]="transaction.recipientPhone" name="recipientPhone" required>
-    </div>
+</div>
+
+<div class="transaction-form">
+  <div *ngIf="showTransactionForm">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="senderPhone">Numéro de téléphone de l'expéditeur</label>
+        <div class="input-container">
+          <span class="material-icons">phone</span>
+          <input type="text" id="senderPhone" [(ngModel)]="transaction.senderPhone" name="senderPhone" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="recipientPhone">Numéro de téléphone du destinataire</label>
+        <div class="input-container">
+          <span class="material-icons">phone</span>
+          <input type="text" id="recipientPhone" [(ngModel)]="transaction.recipientPhone" name="recipientPhone" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="senderBank">Banque de l'expéditeur</label>
+        <div class="input-container">
+          <span class="material-icons">account_balance</span>
+          <input type="text" id="senderBank" [(ngModel)]="transaction.senderBank" name="senderBank" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="recipientBank">Banque du destinataire</label>
+        <div class="input-container">
+          <span class="material-icons">account_balance</span>
+          <input type="text" id="recipientBank" [(ngModel)]="transaction.recipientBank" name="recipientBank" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="amount">Montant de la transaction (MRU)</label>
+        <div class="input-container">
+          <span class="currency-symbol">MRU</span>
+          <input type="number" id="amount" [(ngModel)]="transaction.amount" name="amount" (input)="onAmountChange()" required class="no-spin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="note">Note (optionnel)</label>
+        <div class="input-container">
+          <span class="material-icons">note</span>
+          <input type="text" id="note" [(ngModel)]="transaction.note" name="note">
+        </div>
+      </div>
+      <div>
+        <p>Frais de transaction : {{ transaction.fees }} MRU</p>
+      </div>
+      <button type="submit">Soumettre</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="senderBank">Banque de l'expéditeur</label>
-    <div class="input-container">
-      <span class="material-icons">account_balance</span>
-      <input type="text" id="senderBank" [(ngModel)]="transaction.senderBank" name="senderBank" required>
-    </div>
+  <div *ngIf="!showTransactionForm">
+    <app-transaction-history></app-transaction-history>
   </div>
-  <div class="form-group">
-    <label for="recipientBank">Banque du destinataire</label>
-    <div class="input-container">
-      <span class="material-icons">account_balance</span>
-      <input type="text" id="recipientBank" [(ngModel)]="transaction.recipientBank" name="recipientBank" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="amount">Montant de la transaction (MRU)</label>
-    <div class="input-container">
-      <span class="currency-symbol">MRU</span>
-      <input type="number" id="amount" [(ngModel)]="transaction.amount" name="amount" (input)="onAmountChange()" required class="no-spin">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="note">Note (optionnel)</label>
-    <div class="input-container">
-      <span class="material-icons">note</span>
-      <input type="text" id="note" [(ngModel)]="transaction.note" name="note">
-    </div>
-  </div>
-  <div>
-    <p>Frais de transaction : {{ transaction.fees }} MRU</p>
-  </div>
-  <button type="submit">Soumettre</button>
-</form>
+</div>
