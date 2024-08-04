@@ -1,50 +1,50 @@
 <div class="container" [class.sign-up-mode]="isSignUpMode">
-  <div class="forms-container">
-    <div class="signin-signup">
-      <form (ngSubmit)="isSignUpMode ? onSignup() : onSignin()" #authForm="ngForm" [class.sign-up-form]="isSignUpMode" [class.sign-in-form]="!isSignUpMode">
-        <h2 class="title">{{ isSignUpMode ? 'Sign up' : 'Sign in' }}</h2>
-        
-        <div class="input-field">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required>
-        </div>
-        
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
-        </div>
-        
-        <div class="input-field" *ngIf="isSignUpMode">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-        </div>
-        
-        <button type="submit" class="btn" [disabled]="!authForm.form.valid">
+    <div class="forms-container">
+        <div class="signin-signup">
+            <form (ngSubmit)="isSignUpMode ? onSignup() : onSignin()" #authForm="ngForm" [class.sign-up-form]="isSignUpMode" [class.sign-in-form]="!isSignUpMode">
+                <h2 class="title">{{ isSignUpMode ? 'Sign up' : 'Sign in' }}</h2>
+
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+                </div>
+
+                <div class="input-field" *ngIf="isSignUpMode">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+                </div>
+
+                <button type="submit" class="btn" [disabled]="!authForm.form.valid">
           {{ isSignUpMode ? 'Sign Up' : 'Sign In' }}
         </button>
-        
-        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
-      </form>
-    </div>
-  </div>
 
-  <div class="panels-container">
-    <div class="panel left-panel">
-      <div class="content">
-        <h3>New here?</h3>
-        <p>Welcome to our platform. Click the button below to create a new account.</p>
-        <button (click)="toggleSignUpMode()" class="btn transparent" *ngIf="!isSignUpMode">Sign up</button>
-      </div>
-      <img src="img/log.svg" class="image" alt="Log Image">
+                <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+            </form>
+        </div>
     </div>
 
-    <div class="panel right-panel">
-      <div class="content">
-        <h3>One of us?</h3>
-        <p>If you already have an account, click the button below to sign in.</p>
-        <button (click)="toggleSignUpMode()" class="btn transparent" *ngIf="isSignUpMode">Sign in</button>
-      </div>
-      <img src="img/register.svg" class="image" alt="Register Image">
+    <div class="panels-container">
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>New here?</h3>
+                <p>Welcome to our platform. Click the button below to create a new account.</p>
+                <button (click)="toggleSignUpMode()" class="btn transparent" *ngIf="!isSignUpMode">Sign up</button>
+            </div>
+            <img src="assets/img/log.svg" class="image" alt="Log Image">
+        </div>
+
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>One of us?</h3>
+                <p>If you already have an account, click the button below to sign in.</p>
+                <button (click)="toggleSignUpMode()" class="btn transparent" *ngIf="isSignUpMode">Sign in</button>
+            </div>
+            <img src="assets/img/register.svg" class="image" alt="Register Image">
+        </div>
     </div>
-  </div>
 </div>
