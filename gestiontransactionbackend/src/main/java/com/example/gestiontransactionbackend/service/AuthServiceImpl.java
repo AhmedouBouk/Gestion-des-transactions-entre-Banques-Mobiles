@@ -1,25 +1,19 @@
 package com.example.gestiontransactionbackend.service;
 
-import com.example.gestiontransactionbackend.dto.JwtResponse;
 import com.example.gestiontransactionbackend.dto.SigninRequest;
 import com.example.gestiontransactionbackend.dto.SignupRequest;
 import com.example.gestiontransactionbackend.model.User;
 import com.example.gestiontransactionbackend.repository.UserRepository;
-import com.example.gestiontransactionbackend.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthServiceImpl implements AuthService {
-
-    @Autowired
-    AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
@@ -27,15 +21,12 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
-
     @Override
     public ResponseEntity<String> registerUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
-                    .badRequest()
-                    .body("Error: Username is already taken!");
+                .badRequest()
+                .body("Error: Username is already taken!");
         }
 
         // Create new user's account
@@ -50,12 +41,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<String> authenticateUser(SigninRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.generateToken(authentication);
-
-        return ResponseEntity.ok(new JwtResponse(jwt, loginRequest.getUsername()).getUsername());
+        if (user.isPresent() && encoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
+            return ResponseEntity.ok("User authenticated successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
     }
 }

@@ -31,11 +31,12 @@ export class AuthComponent {
     this.authService.signIn(this.username, this.password).pipe(
       tap(response => {
         console.log('Signin successful', response);
-        this.router.navigate(['/dashboard']);
+        localStorage.setItem('authToken', response.token);  // Save the token
+        this.router.navigate(['/transaction']);
       }),
       catchError(error => {
         console.error('Signin failed', error);
-        this.errorMessage = 'Invalid username or password';
+        this.errorMessage = `The error is: ${error.error ? error.error : error.message}`;
         return of(null); // Return an observable to complete the stream
       })
     ).subscribe();
@@ -48,11 +49,11 @@ export class AuthComponent {
     }
     this.authService.signUp(this.username, this.password).subscribe(
       response => {
-        console.log('Signup successful', response);
+        console.log('Signup successful', response);  // Log the response for debugging
         this.router.navigate(['/transaction']);
       },
       error => {
-        console.error('Signup failed', error);
+        console.error('Signup failed', error);  // Log the error for debugging
         this.errorMessage = 'Signup failed. Please try again.';
       }
     );

@@ -1,18 +1,18 @@
 package com.example.gestiontransactionbackend.security;
-
-import com.example.gestiontransactionbackend.model.User;
-import com.example.gestiontransactionbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.gestiontransactionbackend.model.User;
+import com.example.gestiontransactionbackend.repository.UserRepository;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
