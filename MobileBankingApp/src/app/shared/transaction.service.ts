@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,25 @@ import { catchError } from 'rxjs/operators';
 export class TransactionService {
   private apiUrl = 'http://localhost:8081/api/transactions';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+      } else {
+        console.warn('No authToken found in localStorage.');
+      }
+    } else {
+      console.warn('localStorage is not available in this environment. Authorization header is not set.');
+    }
+  
+    return headers;
   }
+  
 
   createTransaction(transaction: any, username: string): Observable<any> {
     return this.http.post(`${this.apiUrl}?username=${username}`, transaction, { headers: this.getAuthHeaders() })
@@ -58,6 +69,7 @@ export class TransactionService {
         })
       );
   }
+
   getAllTransactions(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() })
       .pipe(
@@ -67,5 +79,4 @@ export class TransactionService {
         })
       );
   }
-  
 }
