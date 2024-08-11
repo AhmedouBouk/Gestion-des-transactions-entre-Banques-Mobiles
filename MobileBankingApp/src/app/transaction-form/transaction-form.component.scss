@@ -142,3 +142,31 @@
     }
   }
 }
+
+
+/* transaction-form.component.scss */
+
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+
+.logout-btn {
+  background-color: #ff4b5c; /* Red color for logout */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff1c33; /* Darker red on hover */
+}
+
+.logout-btn:focus {
+  outline: none;
+}

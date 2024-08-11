@@ -1,13 +1,36 @@
 <div class="admin-panel">
-    <h2>Admin Panel</h2>
-    <ul>
-      <li *ngFor="let transaction of transactions">
-        <p>{{ transaction.details }}</p>
-        <button (click)="updateStatus(transaction.id, 'Completed')">Complete</button>
-        <button (click)="updateStatus(transaction.id, 'Cancelled')">Cancel</button>
-        <button (click)="updateStatus(transaction.id, 'Invalid')">Invalidate</button>
-        <button (click)="updateStatus(transaction.id, 'Valid')">Validate</button>
-      </li>
-    </ul>
+    <h2>All Transactions</h2>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Sender Phone</th>
+          <th>Recipient Phone</th>
+          <th>Sender Bank</th>
+          <th>Recipient Bank</th>
+          <th>Amount</th>
+          <th>Note</th>
+          <th>Fees</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.senderPhone }}</td>
+          <td>{{ transaction.recipientPhone }}</td>
+          <td>{{ transaction.senderBank }}</td>
+          <td>{{ transaction.recipientBank }}</td>
+          <td>{{ transaction.amount }} MRU</td>
+          <td>{{ transaction.note }}</td>
+          <td>{{ transaction.fees }} MRU</td>
+          <td>{{ transaction.date | date:'medium' }}</td>
+          <td>
+            <button (click)="approveTransaction(transaction.id)" class="btn btn-approve">Approve</button>
+            <button (click)="declineTransaction(transaction.id)" class="btn btn-decline">Decline</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   

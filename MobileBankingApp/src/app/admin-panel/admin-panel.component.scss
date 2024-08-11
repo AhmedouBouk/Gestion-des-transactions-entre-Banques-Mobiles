@@ -1,78 +1,66 @@
 .admin-panel {
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   
     h2 {
       text-align: center;
+      margin-bottom: 20px;
       color: #333;
+      font-size: 1.8em;
+    }
+  
+    .error {
+      color: red;
+      text-align: center;
       margin-bottom: 20px;
     }
   
-    ul {
-      list-style: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
   
-      li {
-        background: #fff;
-        margin-bottom: 10px;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
   
-        p {
-          margin: 0;
-          color: #666;
-        }
+      th {
+        background-color: #f4f4f4;
+        color: #333;
+        font-weight: bold;
+      }
   
-        button {
-          background-color: #5995fd;
-          border: none;
-          outline: none;
-          padding: 10px 15px;
-          border-radius: 5px;
-          color: #fff;
-          cursor: pointer;
-          transition: background-color 0.3s;
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+  
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+  
+      .btn {
+        padding: 8px 12px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+  
+        &-approve {
+          background-color: #4CAF50;
+          color: white;
   
           &:hover {
-            background-color: #4d84e2;
+            background-color: #45a049;
           }
+        }
   
-          &.complete {
-            background-color: #28a745;
+        &-decline {
+          background-color: #f44336;
+          color: white;
   
-            &:hover {
-              background-color: #218838;
-            }
-          }
-  
-          &.cancel {
-            background-color: #dc3545;
-  
-            &:hover {
-              background-color: #c82333;
-            }
-          }
-  
-          &.invalidate {
-            background-color: #ffc107;
-  
-            &:hover {
-              background-color: #e0a800;
-            }
-          }
-  
-          &.validate {
-            background-color: #17a2b8;
-  
-            &:hover {
-              background-color: #138496;
-            }
+          &:hover {
+            background-color: #da190b;
           }
         }
       }

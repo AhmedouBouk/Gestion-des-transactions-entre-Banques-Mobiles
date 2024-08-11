@@ -1,7 +1,15 @@
 <div class="transaction-history">
-    <h2>Transaction History</h2>
-    <div *ngFor="let transaction of transactions">
-      <p>{{ transaction.details }}</p>
+  <h2>Transaction History</h2>
+  <div *ngFor="let transaction of transactions" class="transaction">
+    <div class="transaction-details">
+      <p><strong>Sender's Phone:</strong> {{ transaction.senderPhone }}</p>
+      <p><strong>Recipient's Phone:</strong> {{ transaction.recipientPhone }}</p>
+      <p><strong>Sender's Bank:</strong> {{ transaction.senderBank }}</p>
+      <p><strong>Recipient's Bank:</strong> {{ transaction.recipientBank }}</p>
+      <p><strong>Amount:</strong> {{ transaction.amount }} MRU</p>
+      <p *ngIf="transaction.note"><strong>Note:</strong> {{ transaction.note }}</p>
+      <p><strong>Fees:</strong> {{ transaction.fees }} MRU</p>
+      <p><strong>Date:</strong> {{ transaction.date | date:'medium' }}</p>
     </div>
   </div>
-  
+</div>

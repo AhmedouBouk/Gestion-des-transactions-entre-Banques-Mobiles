@@ -11,18 +11,32 @@ import { TransactionService } from '../shared/transaction.service';
 })
 export class AdminPanelComponent implements OnInit {
   transactions: any[] = [];
+  errorMessage: string = '';
 
   constructor(private transactionService: TransactionService) {}
 
-  ngOnInit() {
-    this.transactionService.getAllTransactions().subscribe(transactions => {
-      this.transactions = transactions;
-    });
+  ngOnInit(): void {
+    this.loadAllTransactions();
   }
 
-  updateStatus(transactionId: number, status: string) {
-    this.transactionService.updateTransactionStatus(transactionId, status).subscribe(() => {
-      this.transactions = this.transactions.filter(t => t.id !== transactionId);
-    });
+  loadAllTransactions() {
+    this.transactionService.getAllTransactions().subscribe(
+      (transactions) => this.transactions = transactions,
+      (error) => this.errorMessage = 'Failed to load transactions. Please try again.'
+    );
+  }
+
+  approveTransaction(transactionId: string) {
+    this.transactionService.approveTransaction(transactionId).subscribe(
+      () => this.loadAllTransactions(),
+      (error) => this.errorMessage = 'Failed to approve transaction. Please try again.'
+    );
+  }
+
+  declineTransaction(transactionId: string) {
+    this.transactionService.rejectTransaction(transactionId).subscribe(
+      () => this.loadAllTransactions(),
+      (error) => this.errorMessage = 'Failed to decline transaction. Please try again.'
+    );
   }
 }
